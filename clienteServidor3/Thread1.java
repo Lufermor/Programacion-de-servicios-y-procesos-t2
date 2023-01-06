@@ -22,6 +22,13 @@ public class Thread1 extends Thread{
 		this.clientes = clientes;
 	}
 	
+	/*
+	 * Pre: ---
+	 * Post: Crea los canales de entrada y salida del socket, 
+	 * envía y recibe mensajes con el cliente, al recibir mensaje, 
+	 * llama al método calcularVocales para contar las vocales en el mensaje
+	 * y le devuelve al cliente un mensaje con el número de vocales.
+	 */
 	@Override
     public void run() {
 		try {
@@ -39,12 +46,16 @@ public class Thread1 extends Thread{
             }
             System.out.println("Servicio terminado");
             cs.close();//Se finaliza la conexión con el cliente
-            clientes.remove(this);
+            clientes.remove(this); //Con esta línea eliminamos este hilo del arrayList
 		}catch (Exception e) {
 	        System.out.println(e.getMessage());
 	    }
 	}
 	
+	/*
+	 * Pre: ---
+	 * Post: cuenta y devuelve el número de vocales en una cadena que se le pasa
+	 */
 	private int calcularVocales(String cadena) {
     	int vocales = 0;
     	for (int x = 0; x < cadena.length(); x++) {
@@ -54,6 +65,10 @@ public class Thread1 extends Thread{
     	return vocales;
     }
     
+	/*
+	 * Pre:---
+	 * Post: Devuelve true si el char que se le pasa es una vocal, sino, devuelve false
+	 */
     private static boolean esVocal(char letra) {
         return "aeiou".contains(String.valueOf(letra).toLowerCase());
     }
