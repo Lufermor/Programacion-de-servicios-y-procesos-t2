@@ -12,6 +12,7 @@ public class Cliente extends Conexion {
 
     public void startClient() {//Método para iniciar el cliente
         try {
+        	System.out.println("Cliente iniciado");
         	// Canal para recibir mensajes (entrada)
         	DataInputStream in = new DataInputStream(cs.getInputStream());
         	// Canal para enviar mensajes (salida)

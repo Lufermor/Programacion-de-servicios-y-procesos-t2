@@ -21,7 +21,7 @@ public class Thread1 extends Thread{
 		this.cs = cs;
 		this.clientes = clientes;
 	}
-	
+
 	/*
 	 * Pre: ---
 	 * Post: Crea los canales de entrada y salida del socket, 
@@ -32,8 +32,6 @@ public class Thread1 extends Thread{
 	@Override
     public void run() {
 		try {
-			System.out.println("Cliente en línea");
-			
 			DataInputStream in = new DataInputStream(cs.getInputStream());
 	        DataOutputStream out = new DataOutputStream(cs.getOutputStream());
 	        out.writeUTF("Petición recibida y aceptada");
@@ -41,12 +39,12 @@ public class Thread1 extends Thread{
 	            String mensaje = in.readUTF();
 	            if(mensaje.equalsIgnoreCase("END OF SERVICE")) break;
 	            System.out.println("Mensaje recibido -> " + mensaje);
-	            //System.out.println("Vocales en: \"" + mensaje + "\" : " + calcularVocales(mensaje));
 	            out.writeUTF("Vocales en: \"" + mensaje + "\" : " + calcularVocales(mensaje));
             }
-            System.out.println("Servicio terminado");
+            System.out.println("Hilo terminado");
             cs.close();//Se finaliza la conexión con el cliente
             clientes.remove(this); //Con esta línea eliminamos este hilo del arrayList
+            System.out.println("Clientes en línea: " + clientes.size());
 		}catch (Exception e) {
 	        System.out.println(e.getMessage());
 	    }

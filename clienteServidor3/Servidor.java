@@ -16,14 +16,20 @@ public class Servidor extends Conexion { //Se hereda de conexión para hacer uso
 
     public void startServer() {//Método para iniciar el servidor
         try {
-            System.out.println("Esperando..."); //Esperando conexión
-            cs = ss.accept(); //Accept comienza el socket y espera una conexión desde un cliente
-            // se envía el arrayList para que el hilo pueda borrarse de este al finalizar:
-            clientes.add(new Thread1(cs, clientes)); 
-            if(clientes.size()>=10) {
-            	System.out.println("Servidor ocupado, esperando que se libere un hilo.");
-            	while(clientes.size()>=10);
-            }
+        	while(true) {
+        		System.out.println("Esperando..."); //Esperando conexión
+//                cs = ss.accept(); //Accept comienza el socket y espera una conexión desde un cliente
+        		Thread1 hilo = new Thread1(ss.accept(), clientes);
+        		hilo.start();
+                System.out.println("Cliente en línea");
+                // se envía el arrayList para que el hilo pueda borrarse de este al finalizar:
+                clientes.add(hilo); 
+                System.out.println("Clientes en línea: " + clientes.size());
+                if(clientes.size()>=10) {
+                	System.out.println("Servidor ocupado, esperando que se libere un hilo.");
+                	while(clientes.size()>=10);
+                }
+        	}
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
