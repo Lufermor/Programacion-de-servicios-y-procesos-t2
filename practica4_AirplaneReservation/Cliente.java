@@ -3,7 +3,6 @@ package practica4_AirplaneReservation;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.util.Scanner;
 
 /*
  * Pre:---
@@ -31,6 +30,7 @@ public class Cliente extends Conexion {
 //            char[] filas = "1234".toCharArray();
 //            char[] sillas = "ABCD".toCharArray();
             String request = "BOOK:1A";
+            out.writeUTF("START BUY:" + clientName);
             while(true) {
             	out.writeUTF(request);
             	System.out.println("Booking seat: " + request.split(":")[1]);
@@ -60,8 +60,8 @@ public class Cliente extends Conexion {
 //            		}
 //            	}
             }
-            System.out.println("Session finished");
-            System.out.println("Boookes seats: " + bookedseats);
+            System.out.println(clientName + " Session finished");
+            System.out.println(clientName + " Boookes seats: " + bookedseats);
             cs.close();
         }
         catch (Exception e) {

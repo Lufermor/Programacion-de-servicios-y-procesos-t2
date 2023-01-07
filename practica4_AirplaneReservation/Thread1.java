@@ -42,7 +42,9 @@ public class Thread1 extends Thread{
             while(true) {
 	            String mensaje = in.readUTF();
 	            if(mensaje.equalsIgnoreCase("END OF SERVICE")) break;
-	            if(mensaje.split(":")[0] != "BOOK") {
+	            if(mensaje.split(":")[0].equalsIgnoreCase("START BUY")) {
+	            	System.out.println("WELCOME TO SERVICE" + mensaje.split(":")[0]);
+	            }else if(mensaje.split(":")[0] != "BOOK") {
 	            	out.writeUTF("Invalid request");
 	            	continue;
 	            }
