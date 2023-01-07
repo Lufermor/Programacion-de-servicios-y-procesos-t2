@@ -22,7 +22,7 @@ public class Thread2_Clientes extends Thread {
 		Cliente cli;
 		try {
 			cli = new Cliente("Cliente" + i);
-			System.out.println("Starting client n \n" + i);
+			System.out.println("Starting client n " + i + "\n");
 		    cli.startClient(); //Se inicia el cliente
 		} catch (IOException e) {
 			e.printStackTrace();

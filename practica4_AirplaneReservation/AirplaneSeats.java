@@ -31,7 +31,7 @@ public class AirplaneSeats {
 	 * else, notifies the user indicating the seats status.
 	 */
 	protected String reserve(String silla) {
-		if(seats == "XXXX-XXXX-XXXX-XXXX".split("-")) {
+		if(String.join("-", seats).equalsIgnoreCase("XXXX-XXXX-XXXX-XXXX")) {
 			return "FLIGHT FULL";
 		}
 		
@@ -53,5 +53,6 @@ public class AirplaneSeats {
 		}
 		semaphore.release();
 		return "SEAT BUSY:" + String.join("-", seats);
+		
 	}
 }

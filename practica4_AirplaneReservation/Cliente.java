@@ -13,6 +13,7 @@ import java.io.IOException;
 public class Cliente extends Conexion {
 	protected String clientName;
 	protected String bookedseats;
+	
     public Cliente(String clientName) throws IOException {
     	super("cliente");
     	this.clientName = clientName;
@@ -28,7 +29,7 @@ public class Cliente extends Conexion {
     public void startClient() {//Método para iniciar el cliente
         try {
         	// Canal para recibir mensajes (entrada)
-        	System.out.println("Client session start");
+        	System.out.println("Client " + clientName + " session start");
         	DataInputStream in = new DataInputStream(cs.getInputStream());
         	// Canal para enviar mensajes (salida)
             DataOutputStream out = new DataOutputStream(cs.getOutputStream());
@@ -40,17 +41,23 @@ public class Cliente extends Conexion {
             out.writeUTF("START BUY:" + clientName);
             while(true) {
             	out.writeUTF(request);
-            	System.out.println(clientName + "Booking seat: " + request.split(":")[1]);
+            	System.out.println(clientName + " Booking seat: " + request.split(":")[1]);
             	mensaje = in.readUTF();
-            	System.out.println(mensaje);
-            	if(mensaje.equalsIgnoreCase("FLIGHT FULL")) break;
+//            	System.out.println(mensaje);
+            	if(mensaje.equalsIgnoreCase("FLIGHT FULL")) {
+            		System.out.println(mensaje);
+            		break;
+            	}
 	            if(mensaje.split(":")[0].equalsIgnoreCase("RESERVED")) {
+	            	System.out.println();
+	            	System.out.println(clientName + " RESERVED seat: " + mensaje.split(":")[1]);
 	            	bookedseats += mensaje.split(":")[1] + " ";
 	            	int filaReservada = Integer.parseInt("" + request.split(":")[1].charAt(0));
 	            	if(filaReservada == 4) {
 	            		request = "BOOK:" + 3 + request.split(":")[1].charAt(1);
 	            	}else request = "BOOK:" + (filaReservada + 1) + request.split(":")[1].charAt(1);
 	            }else if(mensaje.split(":")[0].equalsIgnoreCase("SEAT BUSY")) {
+	            	System.out.println(mensaje);
 	            	String sillas[] = mensaje.split(":")[1].split("-");
 	            	for(int i = 0; i < sillas.length; i++) {
 	            		if(sillas[i].contains("L")) {
@@ -60,19 +67,9 @@ public class Cliente extends Conexion {
 	            	}
 	            }
 	            
-//            	for(char fila : filas) {
-//            		for(char silla: sillas) {
-//            			out.writeUTF("BOOK:" + fila + silla);
-//            			mensaje = in.readUTF();
-//        	            if(mensaje.equalsIgnoreCase("FLIGHT FULL")) break;
-//        	            if(mensaje.split(":")[0].equalsIgnoreCase("RESERVED")) {
-//        	            	bookedseats += mensaje.split(":")[1] + " ";
-//        	            }
-//            		}
-//            	}
             }
             System.out.println(clientName + " Session finished");
-            System.out.println(clientName + " Boookes seats: " + bookedseats);
+            System.out.println(clientName + " Boooked seats: " + bookedseats);
             cs.close();
         }
         catch (Exception e) {

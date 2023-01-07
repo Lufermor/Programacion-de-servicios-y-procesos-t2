@@ -16,14 +16,12 @@ public class Thread1 extends Thread{
 	protected Socket cs;
 	ArrayList<Thread1> clientes;
 	AirplaneSeats vuelo;
-	Servidor servidor;
 
-	public Thread1(Socket cs, ArrayList<Thread1> clientes, AirplaneSeats vuelo, Servidor servidor) throws IOException {
+	public Thread1(Socket cs, ArrayList<Thread1> clientes, AirplaneSeats vuelo) throws IOException {
 		super();
 		this.cs = cs;
 		this.clientes = clientes;
 		this.vuelo = vuelo;
-		this.servidor = servidor;
 	}
 
 	/*
@@ -44,18 +42,20 @@ public class Thread1 extends Thread{
 	            if(mensaje.equalsIgnoreCase("END OF SERVICE")) break;
 	            if(mensaje.split(":")[0].equalsIgnoreCase("START BUY")) {
 	            	System.out.println("WELCOME TO SERVICE " + mensaje.split(":")[1]);
-	            }else if(mensaje.split(":")[0] != "BOOK") {
+	            	continue;
+	            }else if(!mensaje.split(":")[0].strip().equalsIgnoreCase("BOOK")) {
+//	            	System.out.println(mensaje.split(":")[0]);
 	            	out.writeUTF("Invalid request");
 	            	continue;
 	            }
-	            if(mensaje.split(":")[1].length() != 2) {
+	            if(mensaje.split(":")[1].strip().length() != 2) {
+	            	System.out.println(mensaje);
 	            	out.writeUTF("Booked seat doesn't exist");
 	            	continue;
 	            }
 	            String respuesta = vuelo.reserve(mensaje.split(":")[1]);
 	            out.writeUTF(respuesta);
 	            if(respuesta.equalsIgnoreCase("FLIGHT FULL")) {
-	            	servidor.setFinalizar(true);
 	            	break;
 	            }
             }
