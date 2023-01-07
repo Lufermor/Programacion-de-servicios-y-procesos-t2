@@ -40,7 +40,7 @@ public class Cliente extends Conexion {
             out.writeUTF("START BUY:" + clientName);
             while(true) {
             	out.writeUTF(request);
-            	System.out.println("Booking seat: " + request.split(":")[1]);
+            	System.out.println(clientName + "Booking seat: " + request.split(":")[1]);
             	mensaje = in.readUTF();
             	System.out.println(mensaje);
             	if(mensaje.equalsIgnoreCase("FLIGHT FULL")) break;

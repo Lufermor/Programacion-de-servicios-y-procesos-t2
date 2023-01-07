@@ -43,7 +43,7 @@ public class Thread1 extends Thread{
 	            String mensaje = in.readUTF();
 	            if(mensaje.equalsIgnoreCase("END OF SERVICE")) break;
 	            if(mensaje.split(":")[0].equalsIgnoreCase("START BUY")) {
-	            	System.out.println("WELCOME TO SERVICE" + mensaje.split(":")[0]);
+	            	System.out.println("WELCOME TO SERVICE " + mensaje.split(":")[1]);
 	            }else if(mensaje.split(":")[0] != "BOOK") {
 	            	out.writeUTF("Invalid request");
 	            	continue;
@@ -57,7 +57,7 @@ public class Thread1 extends Thread{
 	            if(respuesta.equalsIgnoreCase("FLIGHT FULL")) {
 	            	servidor.setFinalizar(true);
 	            	break;
-	            };
+	            }
             }
             System.out.println("Client log out");
             cs.close();//Se finaliza la conexión con el cliente
