@@ -7,7 +7,8 @@ import java.io.IOException;
 /*
  * Pre:---
  * Post: This class starts a client session, creates in and out channels, 
- * 
+ * Communicates with the server to start booking seats, until the flight is full
+ * finally it notifies the seats succesfully booked. 
  */
 public class Cliente extends Conexion {
 	protected String clientName;
@@ -18,6 +19,12 @@ public class Cliente extends Conexion {
     	bookedseats = "";
     } //Se usa el constructor para cliente de Conexion
 
+    /*
+     * Pre: ---
+     * Post: Creates in and out channels, notifies the server to start booking, 
+     * when a seat is reserved or already busy, the method tries to book another seat
+     * until it receives the response "FLIGHT FULL".
+     */
     public void startClient() {//Método para iniciar el cliente
         try {
         	// Canal para recibir mensajes (entrada)
@@ -39,6 +46,10 @@ public class Cliente extends Conexion {
             	if(mensaje.equalsIgnoreCase("FLIGHT FULL")) break;
 	            if(mensaje.split(":")[0].equalsIgnoreCase("RESERVED")) {
 	            	bookedseats += mensaje.split(":")[1] + " ";
+	            	int filaReservada = Integer.parseInt("" + request.split(":")[1].charAt(0));
+	            	if(filaReservada == 4) {
+	            		request = "BOOK:" + 3 + request.split(":")[1].charAt(1);
+	            	}else request = "BOOK:" + (filaReservada + 1) + request.split(":")[1].charAt(1);
 	            }else if(mensaje.split(":")[0].equalsIgnoreCase("SEAT BUSY")) {
 	            	String sillas[] = mensaje.split(":")[1].split("-");
 	            	for(int i = 0; i < sillas.length; i++) {

@@ -26,6 +26,12 @@ public class Servidor extends Conexion { //Se hereda de conexión para hacer uso
 		this.finalizar = finalizar;
 	}
 
+	/*
+	 * Pre: ---
+	 * Post: Waits for a client connection, when a client connects, a thread is created
+	 * to attend that client, the thread is initialized and added to an arrayList,
+	 * the process finish when the 'finalizar' variable is true.
+	 */
 	public void startServer() {//Método para iniciar el servidor
         try {
         	while(true) {

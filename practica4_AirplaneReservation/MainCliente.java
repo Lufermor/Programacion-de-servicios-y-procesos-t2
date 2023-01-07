@@ -10,7 +10,7 @@ public class MainCliente {
 	  for(int i = 0; i < 4; i++) {
 		  Cliente cli = new Cliente("Cliente" + i); //Se crea el cliente
 
-	      System.out.println("Iniciando cliente n \n" + i);
+	      System.out.println("Starting client n \n" + i);
 	      cli.startClient(); //Se inicia el cliente
 
 		  clientes.add(cli);

@@ -12,7 +12,7 @@ public class MainServidor {
 	public static void main(String[] args) throws IOException {
 		Servidor serv = new Servidor(); //Se crea el servidor
 		
-		System.out.println("Iniciando servidor\n");
+		System.out.println("Initializing server\n");
 		serv.startServer(); //Se inicia el servidor
     }
 	  
