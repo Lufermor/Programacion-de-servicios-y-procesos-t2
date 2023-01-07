@@ -47,7 +47,7 @@ public class Thread1 extends Thread{
 	            	continue;
 	            }
 	            if(mensaje.split(":")[1].length() != 2) {
-	            	System.out.println("Booked seat doesn't exist");
+	            	out.writeUTF("Booked seat doesn't exist");
 	            	continue;
 	            }
 	            String respuesta = vuelo.reserve(mensaje.split(":")[1]);
